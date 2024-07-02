@@ -1,0 +1,49 @@
+<p-toast></p-toast>
+<div class="container">
+    <div class="btn-new-config justify-content-center">
+        <h4 class="m-2">{{tituloPrincipal}}</h4>
+        <button class="btn btn-primary" (click)="openModal()" >Crear Arl</button>
+    </div>
+</div>
+<article>
+    <div class="contenerdor-tabla m-4">
+        <app-listar-arl (eliminar)="eliminarArl($event)"
+         (editarArl)="obtenerPorId($event)" [listarArl]="listarArl">
+        </app-listar-arl>
+
+    </div>
+</article>
+<p-dialog [(visible)]="displayModalForm" [modal]="true" [style]="{width: '40%'}" [dismissableMask]="true"
+    [responsive]="true" [draggable]="false" [resizable]="false" (onHide)="closedModal()">
+    <h6><b>{{tituloModal}}</b></h6>
+    <p-card class="mt-1">
+        <form [formGroup]="formulario" (ngSubmit)="crearArl(formulario.value)">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+                <div class="col-md-8 col-12 mt-2">
+                    <div class="form-group ">
+                        <label>Nombre</label>
+                        <input class="form-control" type="text" formControlName="nombreArl">
+                        <small *ngIf="formulario?.get('nombreArl')?.invalid && formulario?.get('nom reArl')?.touched"
+                            class="p-error">
+                            El nombre de la arl es requerido.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-md-8 col-12 mt-2">
+                    <div class="p-field p-col">
+                    <p-checkbox formControlName="estado" [binary]="true" label="Habilitado
+                    "></p-checkbox>
+                    <small *ngIf="formulario.get('estado')?.errors?.['required'] && formulario.get('estado')?.touched" class="text-danger">El campo es requerido</small>
+                  </div>
+                </div>
+            </div>
+            <div class="row flex-column align-items-center">
+                <div class="col-md-6 mt-3">
+                    <button class="btn btn-primary" typeBtn="submit">Guardar</button>
+                </div>
+
+            </div>
+
+        </form>
+    </p-card>
+</p-dialog>

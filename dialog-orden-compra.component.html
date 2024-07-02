@@ -1,0 +1,102 @@
+<p-dialog [(visible)]="displayModalView" [header]="tituloModal" [modal]="true" [style]="{width: '50%'}" [dismissableMask]="true"
+(onHide)="closedModal()" [focusOnShow]="false">
+
+<div class="col" *ngIf="ordenCompra">
+    <div class="row">
+        <div class="col">
+        <h5>ORDEN DE COMPRA</h5>
+        <p><strong>Número OC:</strong> {{ordenCompra.idOrdenCompra}}</p>
+        <p><strong>Fecha elaboración:</strong> {{ordenCompra.fechaElaboracion | date: 'dd/MM/yyyy'}}</p>
+        <p><strong>Grupo compras:</strong> {{ordenCompra.grupoCompra}}</p>
+        <p><strong>Observaciones:</strong> {{ordenCompra.observacion}}</p>
+      </div>
+    </div>
+    <p-divider />
+    <div class="row">
+        <div class="col">
+            <h5>INFORMACIÓN COMPRADOR</h5>
+            <p><strong>Empresa:</strong> {{ordenCompra.cliente.nombreCliente}}</p>
+            <p><strong>NIT:</strong> {{ordenCompra.cliente.nitCliente}}</p>
+            <p><strong>Dirección:</strong> {{ordenCompra.cliente.direccionCliente}}</p>
+            <p><strong>Teléfono:</strong> {{ordenCompra.cliente.telefonoCliente}}</p>
+            <p><strong>Contacto:</strong> {{ordenCompra.cliente.contactoCliente}}</p>
+            <p><strong>Email:</strong> {{ordenCompra.cliente.emailCliente}}</p>
+            <p><strong>Ciudad:</strong> {{ordenCompra.cliente.ciudadCliente}}</p>
+            <p><strong>Departamento:</strong> {{ordenCompra.cliente.departamentoCliente}}</p>
+            <p><strong>País:</strong> {{ordenCompra.cliente.paisCliente}}</p>
+          </div>
+        <div class="col">
+          <h5>INFORMACIÓN PROVEEDOR</h5>
+          <p><strong>Empresa:</strong> {{ordenCompra.proveedor.nombreProveedor}}</p>
+          <p><strong>NIT:</strong> {{ordenCompra.proveedor.nitProveedor}}</p>
+          <p><strong>Dirección:</strong> {{ordenCompra.proveedor.direccionProveedor}}</p>
+          <p><strong>Teléfono:</strong> {{ordenCompra.proveedor.telefonoProveedor}}</p>
+          <p><strong>Contacto:</strong> {{ordenCompra.proveedor.contactoProveedor}}</p>
+          <p><strong>Email:</strong> {{ordenCompra.proveedor.emailProveedor}}</p>
+          <p><strong>Ciudad:</strong> {{ordenCompra.proveedor.ciudadProveedor}}</p>
+          <p><strong>Departamento:</strong> {{ordenCompra.proveedor.departamentoProveedor}}</p>
+          <p><strong>País:</strong> {{ordenCompra.proveedor.paisProveedor}}</p>
+        </div>
+    </div>
+    <p-divider />
+    <div class="row">
+      <div class="col">
+        <h5>INFORMACIÓN ENTREGA/EJECUCIÓN</h5>
+        <p><strong>Dirección:</strong> {{ordenCompra.entregaEjecucionDetalle.direccion}}</p>
+        <p><strong>Teléfono:</strong> {{ordenCompra.entregaEjecucionDetalle.telefono}}</p>
+        <p><strong>Contacto:</strong> {{ordenCompra.entregaEjecucionDetalle.contacto}}</p>
+        <p><strong>Email:</strong> {{ordenCompra.entregaEjecucionDetalle.email}}</p>
+        <p><strong>País:</strong> {{ordenCompra.entregaEjecucionDetalle.pais}}</p>
+        <p><strong>Departamento:</strong> {{ordenCompra.entregaEjecucionDetalle.departamento}}</p>
+        <p><strong>Ciudad:</strong> {{ordenCompra.entregaEjecucionDetalle.ciudad}}</p>
+        <p><strong>Orden:</strong> {{ordenCompra.entregaEjecucionDetalle.orden}}</p>
+      </div>
+      <div class="col">
+        <h5>CONDICIONES DE NEGOCIACION</h5>
+        <p><strong>Moneda:</strong> {{ordenCompra.codigoMoneda}}</p>
+        <p><strong>Pago:</strong> {{ordenCompra.metodoPago}}</p>
+      </div>
+    </div>
+    <p-divider />
+    <div class="row mt-3">
+      <h5>DETALLES</h5>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descripción</th>
+            <th>Fecha Entrega</th>
+            <th>Dirección</th>
+            <th>Cantidad</th>
+            <th>UM</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detalle of ordenCompra.ordenCompraDetalles">
+            <td>{{detalle.item}}</td>
+            <td>{{detalle.descripcion}}</td>
+            <td>{{detalle.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+            <td>{{detalle.direccion}}</td>
+            <td>{{detalle.cantidad}}</td>
+            <td>{{detalle.unidadMedidad}}</td>
+            <td>{{detalle.precio | currency}}</td>
+            <td>{{detalle.subtotal | currency}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row mt-3">
+      <p><strong>Total Cantidad:</strong> {{ordenCompra.cantidadTotal}}</p>
+      <p><strong>Valor Total:</strong> {{ordenCompra.valorTotal | currency}}</p>
+    </div>
+
+    </div>
+    
+    <div class="row">
+      <button (click)="generatePdf()">Generar PDF</button>
+    </div>
+
+</p-dialog>

@@ -1,0 +1,50 @@
+<div >
+  <div class="container">
+    <div class="mt-4 w-100 m-2 d-flex justify-content-center">
+    </div>
+  </div>
+  <hr>
+  <div class="card">
+    <div class="tabla-contenido">
+      <p-table #dt [value]="remisionCopia" [paginator]="true" [rows]="5" [scrollable]="true"
+        [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate=" página  {first}  registros  {totalRecords}" [rowsPerPageOptions]="[5, 10, 25, 50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>CLIENTE</th>
+            <th>ORDEN</th>
+            <th>CANTIDAD</th>
+            <th>CATEGORIA</th>
+            <th>ACCIONES</th>
+            <th></th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-remision>
+          <tr>
+            <td>{{remision.cliente.nombreCliente}}</td>
+            <td>{{remision.idOrdenCompra}}</td>
+            <td>{{remision.cantidadRemision}}</td>
+            <td>{{remision.categoriaRemision}}</td>
+            <td>
+              <div class="d-flex justify-content-center">
+                  <p-button styleClass="button-border mx-2" icon="pi pi-info-circle" [rounded]="true" [text]="true" severity="secondary" (onClick)="visualizar(remision.idRemision)"/>                    
+              </div>
+          </td>
+           
+            
+              <td class="container-acciones">
+  
+                <!-- <p-confirmDialog />
+                <div class="d-flex justify-content-center">
+                  <p-button styleClass="button-border mx-2" icon="pi pi-pen-to-square" [rounded]="true" 
+                  [text]="true" severity="secondary" (click)="editar(arl.idArl)"/>                    
+                  <p-button styleClass="button-border" icon="pi pi-trash" [rounded]="true"
+                   [text]="true" severity="danger" (click)="confirm($event,arl.idArl) "/>                    
+                </div> -->
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

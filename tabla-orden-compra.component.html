@@ -1,0 +1,54 @@
+<section>
+    <div class="container">
+        <article>
+            <p-table #dt  [value]="ordenesCompra" [paginator]="true" [rows]="5" [scrollable]="true"
+            [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }" 
+            [globalFilterFields]="['idOrdenCompra','cliente.nombreCliente']"
+            currentPageReportTemplate=" página {{paginaActual}} registros {totalRecords}" 
+            (onPage)="onPageChange($event)" [rowsPerPageOptions]="[5, 10, 15]">
+
+            <ng-template pTemplate="header">
+    <tr>
+        <th>Número OC</th>
+        <th>Fecha elaboración</th>
+        <th>Grupo compras</th>
+        <th>Cliente</th>
+        <th>Proveedor</th>
+        <th>Moneda</th>
+        <th>Pago</th>
+        <th>Acciones</th>
+    </tr>
+</ng-template>
+
+<ng-template pTemplate="body" let-item>
+    <tr>
+        <td>{{ item.idOrdenCompra }}</td>
+        <td>{{ item.fechaElaboracion | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ item.grupoCompra }}</td>
+        <td>{{ item.cliente.nombreCliente }}</td>
+        <td>{{ item.proveedor.nombreProveedor }}</td>
+        <td>{{ item.codigoMoneda }}</td>
+        <td>{{ item.metodoPago }}</td>
+        <td>
+            <div class="d-flex justify-content-center">
+                <p-button styleClass="button-border mx-2" icon="pi pi-info-circle" [rounded]="true" [text]="true" severity="secondary" (onClick)="visualizarOrdenCompra(item.idOrdenCompra)"/>                    
+                <!-- <p-button styleClass="button-border" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarContrato(item.idContrato)"/>                     -->
+            </div>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template pTemplate="paginatorright">
+    <span class="search-container">
+        <span class="p-input-icon-right">
+            <i class="pi pi-search icono-search"></i>
+            <input #filterInput pInputText type="text" class="buscador" placeholder="Buscar"
+                (input)="dt.filterGlobal(filterInput.value, 'contains')" [formControl]="buscador"/>
+        </span>
+    </span>
+</ng-template>
+
+</p-table>
+        </article>
+    </div>
+</section> 

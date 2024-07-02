@@ -1,0 +1,41 @@
+<div class="listar-arl">
+  <div class="container">
+    <div class="mt-4 w-100 m-2 d-flex justify-content-center">
+    </div>
+  </div>
+  <hr>
+  <div class="card">
+    <div class="tabla-contenido">
+      <p-table #dt [value]="listaArlSignal()" [paginator]="true" [rows]="5" [scrollable]="true"
+        [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate=" página  {first}  registros  {totalRecords}" [rowsPerPageOptions]="[5, 10, 25, 50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>NOMBRE</th>
+            <th>ESTADO</th>
+            <th>ACCIONES</th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-arl>
+          <tr>
+            <td>{{arl.nombreArl}}</td>
+            <td>{{arl.estado == true ? 'Habilitado' : 'Deshabilitado'}}</td>
+            <td class="container-acciones">
+
+              <p-confirmDialog />
+              <div class="d-flex justify-content-center">
+                <p-button styleClass="button-border mx-2" icon="pi pi-pen-to-square" [rounded]="true" 
+                [text]="true" severity="secondary" (click)="editar(arl.idArl)"/>                    
+                <p-button styleClass="button-border" icon="pi pi-trash" [rounded]="true"
+                 [text]="true" severity="danger" (click)="confirm($event,arl.idArl) "/>                    
+              </div>
+
+
+
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSS.Creaciones.PAJOV.API", "CSS.Creaciones.PAJOV.API\CSS.Creaciones.PAJOV.API.csproj", "{69EBFFA4-A855-423B-9B34-D855FA01F620}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{298585F8-378E-412A-95A1-6450C3B1B24F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{E1CC6EC3-7AED-4E37-9D10-CE5942E373B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSS.Creaciones.PAJOV.Application", "CSS.Creaciones.PAJOV.Application\CSS.Creaciones.PAJOV.Application.csproj", "{3298FCEF-A526-4C9A-80F6-06A483355BE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSS.Creaciones.Pajov.Domain", "CSS.Creaciones.Pajov.Domain\CSS.Creaciones.Pajov.Domain.csproj", "{3F032549-9DF4-41BE-8FFE-6399E341257D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSS.Creaciones.Pajov.Infraestructure", "CSS.Creaciones.Pajov.Infraestructure\CSS.Creaciones.Pajov.Infraestructure.csproj", "{523BA070-BD72-40A9-844A-A31CDF4DAB74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69EBFFA4-A855-423B-9B34-D855FA01F620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69EBFFA4-A855-423B-9B34-D855FA01F620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69EBFFA4-A855-423B-9B34-D855FA01F620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69EBFFA4-A855-423B-9B34-D855FA01F620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3298FCEF-A526-4C9A-80F6-06A483355BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3298FCEF-A526-4C9A-80F6-06A483355BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3298FCEF-A526-4C9A-80F6-06A483355BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3298FCEF-A526-4C9A-80F6-06A483355BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F032549-9DF4-41BE-8FFE-6399E341257D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F032549-9DF4-41BE-8FFE-6399E341257D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F032549-9DF4-41BE-8FFE-6399E341257D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F032549-9DF4-41BE-8FFE-6399E341257D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{523BA070-BD72-40A9-844A-A31CDF4DAB74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{523BA070-BD72-40A9-844A-A31CDF4DAB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{523BA070-BD72-40A9-844A-A31CDF4DAB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{523BA070-BD72-40A9-844A-A31CDF4DAB74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3298FCEF-A526-4C9A-80F6-06A483355BE7} = {298585F8-378E-412A-95A1-6450C3B1B24F}
+		{3F032549-9DF4-41BE-8FFE-6399E341257D} = {298585F8-378E-412A-95A1-6450C3B1B24F}
+		{523BA070-BD72-40A9-844A-A31CDF4DAB74} = {E1CC6EC3-7AED-4E37-9D10-CE5942E373B3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12BC21E1-BE05-4FC2-8E5D-477DF6059F60}
+	EndGlobalSection
+EndGlobal

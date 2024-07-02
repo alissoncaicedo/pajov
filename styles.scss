@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+
+$mainColor: #EE2B7B;
+$hoverColor: #D0115F;
+$activeColor: #EE2B7B;
+$disabledColor: #F472A7;
+
+p-table th,
+td {
+    font-size: 15px;
+    position: relative;
+    z-index: 2;
+    text-align: center !important;
+    font-family: 'Montserrat', 'sans-serif' !important;
+    // font-family: 'Montserrat', 'sans-serif' !important;
+    padding: 15px 10px;
+    font-size: 10;
+}
+
+// .p-button {
+//     color: white;
+//     // border-radius: 8px;
+//     margin: 0 4px;
+
+//     &:hover {
+//         background-color: red;
+//     }
+
+//     &:active {
+//         background-color: green;
+//     }
+// }
+
+.p-dropdown-items {
+    padding: 0 !important;
+}

@@ -1,0 +1,47 @@
+<p-dialog [(visible)]="displayModalView" [header]="tituloModal" [modal]="true" [style]="{width: '50%'}"
+    [dismissableMask]="true" (onHide)="closedModal()" [focusOnShow]="false">
+
+    <div class="col" *ngIf="remision">
+        <div class="row">
+            <div class="col">
+                <h4>REMISION</h4>
+                <p><strong>Número Remisión:</strong>{{remision.idRemision}}</p>
+                <p><strong>Fecha:</strong>{{remision.fechaRemision | date: 'dd/MM/yyyy'}}</p>
+                <p><strong>Cantidad:</strong>{{remision.cantidadRemision}}</p>
+                <p><strong>Categoria:</strong>{{remision.categoriaRemision}}</p>
+            </div>
+        </div>
+        <p-divider />
+        <div class="row">
+            <div class="col">
+                <h5>INFORMACIÓN COMPRADOR</h5>
+                <p><strong>Empresa:</strong> {{remision.cliente.nombreCliente}}</p>
+                <p><strong>NIT:</strong> {{remision.cliente.nitCliente}}</p>
+                <p><strong>Teléfono:</strong> {{remision.cliente.telefonoCliente}}</p>
+                <p><strong>Dirección:</strong> {{remision.cliente.direccionCliente}}</p>
+            </div>
+            <div class="col">
+                <h5>INFORMACION ORDEN DE COMPRA</h5>
+                <p><strong>{{remision.idOrdenCompra}}</strong></p>
+            </div>
+        </div>
+        <p-divider />
+        <div class="row mt-3">
+            <h5>DETALLES</h5>
+            <table>
+                <tr>
+                    <th>Referencia</th>
+                    <th>Descripción</th>
+                    <th>Talla</th>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let detalles of remision.remisionDetalles">
+                        <td>{{detalles.referenciaRemisionDetalle}}</td>
+                        <td>{{detalles.descripcionRemisionDetalle}}</td>
+                        <td>{{detalles.tallaRemisionDetalle}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+

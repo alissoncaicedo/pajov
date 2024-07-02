@@ -1,0 +1,146 @@
+<p-toast></p-toast>
+<div class="container">
+    <div class="btn-new-config justify-content-center">
+        <h4 class="m-2">{{tituloPrincipal}}</h4>
+        <button class="btn btn-primary" (click)="openModal()">Crear Remision</button>
+    </div>
+</div>
+
+<article>
+    <div class="contenedor-tabla m-4">
+        <app-tabla-remision (onVisualizar)="obtenerPorId($event.idRemision)" ></app-tabla-remision>
+    </div>
+    <app-dialog-remision-detalle [remision]="remisionById" [displayModalView]="displayModalView" (closeModal)="displayModalView = false"></app-dialog-remision-detalle>
+</article>
+
+<p-dialog [(visible)]="displayModalForm" [modal]="true" [style]="{width: '40%'}" [dismissableMask]="true"
+    [responsive]="true" [draggable]="false" [resizable]="false" (onHide)="closedModal()">
+    <h6><b>{{tituloModal}}</b></h6>
+    <p-card class="mt-1">
+        <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <div class="col text-start fs-6">
+                    <label for="idCliente" class="form-label fw-semibold">Cliente: *</label>
+                    <p-dropdown
+                     formControlName="idCliente"
+                      [options]="clientes" 
+                     [filter]="true"
+                        filterBy="nombreCliente" 
+                        [showClear]="true"
+                         optionLabel="nombreCliente" 
+                         optionValue="idCliente"
+                        placeholder="Seleccionar cliente" 
+                        emptyFilterMessage="No encontrado"
+                        (onChange)="consultarClienteDetalle($event.value)" 
+                        autoWidth="false"
+                         [style]="{'width':'100%'}"
+                        scrollHeight="150px">
+                    </p-dropdown>
+                    <small *ngIf="idCliente.invalid && (idCliente.dirty || idCliente.touched)" class="block p-error">
+                        <div *ngIf="idCliente.errors?.['required']">El cliente es requerido.</div>
+                    </small>
+                </div>
+            </div>
+            <div *ngIf="clienteDetalle">
+                <div class="row mt-3">
+                    <div class="col text-start fs-6">
+                        <label for="nitCliente" class="form-label fw-semibold">NIT:</label>
+                        <input type="text" id="nitCliente" [value]="clienteDetalle.nitCliente" class="form-control"
+                            readonly />
+                    </div>
+                    <div class="col text-start fs-6">
+                        <label for="telefonoCliente" class="form-label fw-semibold">Teléfono:</label>
+                        <input type="text" id="telefonoCliente" [value]="clienteDetalle.telefonoCliente"
+                            class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col text-start fs-6">
+                        <label for="direccionCliente" class="form-label fw-semibold">Dirección:</label>
+                        <input type="text" id="direccionCliente" [value]="clienteDetalle.direccionCliente"
+                            class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col text-start fs-6">
+                    <label for="idOrdenCompra" class="form-label fw-semibold">Orden: *</label>
+                    <p-dropdown
+                     formControlName="idOrdenCompra"
+                      [options]="ordenCompras" 
+                     [filter]="true"
+                        filterBy="idOrdenCompra" 
+                        [showClear]="true"
+                         optionLabel="idOrdenCompra" 
+                         optionValue="idOrdenCompra"
+                        placeholder="Seleccionar orden" 
+                        emptyFilterMessage="No encontrado"
+                        (onChange)="consultarOrdenCompraDetalle($event.value)" 
+                        autoWidth="false"
+                         [style]="{'width':'100%'}"
+                        scrollHeight="150px">
+                    </p-dropdown>
+                    <small *ngIf="idOrdenCompra.invalid && (idOrdenCompra.dirty || idOrdenCompra.touched)" class="block p-error">
+                        <div *ngIf="idOrdenCompra.errors?.['required']">La orden es requerida.</div>
+                    </small>
+                </div>
+                <div class="row mt-3">
+                    <div class="col text-start fs-6">
+                      <label for="fechaRemision" class="form-label fw-semibold">Fecha:</label>
+                      <input type="date" class="form-control form-control-sm" id="fechaRemision" formControlName="fechaRemision"> 
+                    </div>  
+                    <div class="col text-start fs-6">
+                        <label for="cantidadRemision" class="form-label fw-semibold">Cantidad:</label>
+                        <input type="number" class="form-control form-control-sm" id="cantidadRemision"
+                            formControlName="cantidadRemision" />
+                    
+                    <div class="col text-start fs-6">
+                        <label for="categoriaRemision" class="form-label fw-semibold">categoria:</label>
+                        <input type="text" class="form-control form-control-sm" id="categoriaRemision"
+                            formControlName="categoriaRemision" />
+                    </div>
+                </div>    
+
+            </div>
+            <div class="col">
+                <p-button type="button" styleClass="button-border" severity="success" label="Agregar detalles" (click)="addDetalle()"></p-button>
+              </div>
+            <div formArrayName="remisionDetalle">
+                <div *ngFor="let detalle of detalles.controls; let i=index" [formGroupName]="i">
+                    <div class="col mt-3">
+                        <div class="row">
+                            <div class="col text-start fs-6">
+                                <label for="referenciaRemisionDetalle"
+                                    class="form-label fw-semibold">Referencia:</label>
+                                <input type="text" class="form-control form-control-sm" id="referenciaRemisionDetalle"
+                                    formControlName="referenciaRemisionDetalle" />
+                            </div>
+                            <div class="col text-start fs-6">
+                                <label for="descripcionRemisionDetalle"
+                                    class="form-label fw-semibold">Descripcion:</label>
+                                <input type="text" class="form-control form-control-sm" id="descripcionRemisionDetalle"
+                                    formControlName="descripcionRemisionDetalle" />
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                          
+                            </div>
+                            <div class="col text-start fs-6">
+                                <label for="tallaRemisionDetalle" class="form-label fw-semibold">Talla:</label>
+                                <input type="text" class="form-control form-control-sm" id="tallaRemisionDetalle"
+                                    formControlName="tallaRemisionDetalle" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <p-button styleClass="button-border" type="button" label="Eliminar" severity="danger"
+                                (click)="removeDetalle(i)"></p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col text-end">
+                    <p-button styleClass="button-border" label="Guardar" type="submit"></p-button>
+                </div>
+            </div>
+        </form>
+    </p-card>
+</p-dialog>

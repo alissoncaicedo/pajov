@@ -1,0 +1,360 @@
+<p-toast></p-toast>
+
+<div class="btn-new-config justify-content-center">
+    <h3 class="m-3">{{ tituloPrincipal }}</h3>
+    <button class="btn btn-primary" type="button" rounded="true" (click)="openModal()">Generar orden de compra</button>
+</div>
+
+<div class="m-4 justify-content-end">
+    <app-tabla-orden-compra (onVisualizarOrdenCompra)="obtenerIdOrdenCompra($event.idOrdenCompra)"
+    >
+    </app-tabla-orden-compra>
+</div>
+
+<app-dialog-orden-compra [ordenCompra]="ordenCompraById" [displayModalView]="displayModalView" (closeModal)="displayModalView = false">
+
+</app-dialog-orden-compra>
+
+
+<p-dialog [(visible)]="displayModalForm" [header]="tituloModal" [modal]="true" [style]="{width: '35%'}" [dismissableMask]="true"
+(onHide)="closedModal()" [focusOnShow]="false">
+
+<form [formGroup]="ordenCompraForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col text-start fs-6">
+        <label for="fechaElaboracion" class="form-label fw-semibold">Fecha de elaboración:</label>
+        <input type="date" class="form-control form-control-sm" id="fechaElaboracion" formControlName="fechaElaboracion">           
+        <!-- <small *ngIf="fechaElaboracion.invalid && (fechaElaboracion.dirty || fechaElaboracion.touched)" class="block p-error">
+            <div *ngIf="fechaElaboracion.errors?.['required']">La fecha de inicio es requerida.</div>
+        </small> -->
+      </div>  
+
+      <div class="col text-start fs-6">
+        <label for="grupoCompra" class="form-label fw-semibold">Grupo de compra:</label>
+        <input type="text" class="form-control form-control-sm" id="grupoCompra" formControlName="grupoCompra">
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col text-start fs-6">
+        <label for="observacion" class="form-label fw-semibold">Observación:</label>
+        <input type="text" class="form-control form-control-sm" id="observacion" formControlName="observacion">
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <h5>Información comprador</h5>
+      <div class="col text-start fs-6">
+          <label for="idCliente" class="form-label fw-semibold">Cliente: *</label>
+          <p-dropdown
+          formControlName="idCliente" 
+          [options]="clientes"
+          [filter]="true"
+          filterBy="nombreCliente"
+          [showClear]="true" 
+          optionLabel="nombreCliente"
+          optionValue="idCliente" 
+          placeholder="Seleccionar cliente"
+          emptyFilterMessage="No encontrado"
+          (onChange)="consultarClienteDetalle($event.value)"
+          autoWidth="false" 
+          [style]="{'width':'100%'}"
+          scrollHeight="150px"></p-dropdown>
+          <small *ngIf="idCliente.invalid && (idCliente.dirty || idCliente.touched)" class="block p-error">
+              <div *ngIf="idCliente.errors?.['required']">El cliente es requerido.</div>
+          </small>
+      </div>
+
+      <div *ngIf="clienteDetalle">
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="nitCliente" class="form-label fw-semibold">NIT:</label>
+            <input type="text" id="nitCliente" [value]="clienteDetalle.nitCliente" class="form-control" readonly />
+          </div>
+          <div class="col text-start fs-6">
+            <label for="telefonoCliente" class="form-label fw-semibold">Teléfono:</label>
+            <input type="text" id="telefonoCliente" [value]="clienteDetalle.telefonoCliente" class="form-control" readonly />
+          </div>
+        </div>
+          
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="contactoCliente" class="form-label fw-semibold">Contacto:</label>
+            <input type="text" id="contactoCliente" [value]="clienteDetalle.contactoCliente" class="form-control" readonly />
+          </div>
+        </div>
+  
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="emailCliente" class="form-label fw-semibold">Email:</label>
+            <input type="email" id="emailCliente" [value]="clienteDetalle.emailCliente" class="form-control" readonly />
+          </div>
+        </div>
+  
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="direccionCliente" class="form-label fw-semibold">Dirección:</label>
+            <input type="text" id="direccionCliente" [value]="clienteDetalle.direccionCliente" class="form-control" readonly />
+          </div>
+          <div class="col text-start fs-6">
+            <label for="paisCliente" class="form-label fw-semibold">País:</label>
+            <input type="text" id="paisCliente" [value]="clienteDetalle.paisCliente" class="form-control" readonly />
+          </div>
+        </div>
+  
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="departamentoCliente" class="form-label fw-semibold">Departamento:</label>
+            <input type="text" id="departamentoCliente" [value]="clienteDetalle.departamentoCliente" class="form-control" readonly />
+          </div>
+          <div class="col text-start fs-6">
+            <label for="ciudadCliente" class="form-label fw-semibold">Ciudad:</label>
+            <input type="text" id="ciudadCliente" [value]="clienteDetalle.ciudadCliente" class="form-control" readonly />
+          </div>  
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <h5>Información proveedor</h5>
+      <div class="col text-start fs-6">
+          <label for="idProveedor" class="form-label fw-semibold">Proveedor: *</label>
+          <p-dropdown
+          formControlName="idProveedor" 
+          [options]="proveedores"
+          [filter]="true"
+          filterBy="nombreProveedor"
+          [showClear]="true" 
+          optionLabel="nombreProveedor"
+          optionValue="idProveedor" 
+          placeholder="Seleccionar proveedor"
+          emptyFilterMessage="No encontrado"
+          (onChange)="consultarProveedorDetalle($event.value)"
+          autoWidth="false" 
+          [style]="{'width':'100%'}"
+          scrollHeight="150px"></p-dropdown>
+          <small *ngIf="idProveedor.invalid && (idProveedor.dirty || idProveedor.touched)" class="block p-error">
+              <div *ngIf="idProveedor.errors?.['required']">El proveedor es requerido.</div>
+          </small>
+      </div>
+      <div *ngIf="proveedorDetalle">
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="nitProveedor" class="form-label fw-semibold">NIT:</label>
+            <input type="text" id="nitProveedor" [value]="proveedorDetalle.nitProveedor" class="form-control" readonly />
+          </div>
+          <div class="col text-start fs-6">
+            <label for="telefonoProveedor" class="form-label fw-semibold">Teléfono:</label>
+            <input type="text" id="telefonoProveedor" [value]="proveedorDetalle.telefonoProveedor" class="form-control" >
+          </div>
+        </div>
+      
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="contactoProveedor" class="form-label fw-semibold">Contacto:</label>
+            <input type="text" id="contactoProveedor" [value]="proveedorDetalle.contactoProveedor" class="form-control" readonly />
+          </div>
+        </div>
+      
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="emailProveedor" class="form-label fw-semibold">Email:</label>
+            <input type="email" id="emailProveedor" [value]="proveedorDetalle.emailProveedor" class="form-control" readonly />
+          </div>
+        </div>
+      
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="direccionProveedor" class="form-label fw-semibold">Dirección:</label>
+            <input type="text" id="direccionProveedor" [value]="proveedorDetalle.direccionProveedor" class="form-control" readonly />
+          </div>
+          <div class="col text-start fs-6">
+            <label for="paisProveedor" class="form-label fw-semibold">País:</label>
+            <input type="text" id="paisProveedor" [value]="proveedorDetalle.paisProveedor" class="form-control" readonly />
+          </div>
+        </div>
+      
+        <div class="row mt-3">
+          <div class="col text-start fs-6">
+            <label for="departamentoProveedor" class="form-label fw-semibold">Departamento:</label>
+            <input type="text" id="departamentoProveedor" [value]="proveedorDetalle.departamentoProveedor" class="form-control" readonly />
+          </div>
+          <div class="col text-start fs-6">
+            <label for="ciudadProveedor" class="form-label fw-semibold">Ciudad:</label>
+            <input type="text" id="ciudadProveedor" [value]="proveedorDetalle.ciudadProveedor" class="form-control" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3" formGroupName="entregaEjecucionDetalle">
+      <h5>Información entrega/ejecución</h5>
+      <div class="row mt-3">
+        <div class="col text-start fs-6">
+          <label for="direccion" class="form-label fw-semibold">Dirección: *</label>
+          <input type="text" class="form-control form-control-sm" id="direccion" formControlName="direccion">
+          <!-- <small *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)" class="block p-error">
+            <div *ngIf="direccion.errors?.['required']">La dirección es requerida.</div>
+          </small> -->
+        </div>
+        <div class="col text-start fs-6">
+          <label for="telefono" class="form-label fw-semibold">Teléfono:</label>
+          <input type="text" class="form-control form-control-sm" id="telefono" formControlName="telefono">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col text-start fs-6">
+          <label for="contacto" class="form-label fw-semibold">Contacto:</label>
+          <input type="text" class="form-control form-control-sm" id="contacto" formControlName="contacto">
+        </div>
+        <div class="col text-start fs-6">
+          <label for="email" class="form-label fw-semibold">Email:</label>
+          <input type="text" class="form-control form-control-sm" id="email" formControlName="email">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col text-start fs-6">
+          <label for="pais" class="form-label fw-semibold">País: *</label>
+          <input type="text" class="form-control form-control-sm" id="pais" formControlName="pais">
+        </div>
+        <div class="col text-start fs-6">
+          <label for="departamento" class="form-label fw-semibold">Departamento: *</label>
+          <input type="text" class="form-control form-control-sm" id="departamento" formControlName="departamento">
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col text-start fs-6">
+          <label for="ciudad" class="form-label fw-semibold">Ciudad *:</label>
+          <input type="text" class="form-control form-control-sm" id="ciudad" formControlName="ciudad">
+        </div>
+        <div class="col text-start fs-6">
+          <label for="orden" class="form-label fw-semibold">Orden *:</label>
+          <input type="text" class="form-control form-control-sm" id="orden" formControlName="orden">
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <h5>Condiciones de negociación</h5>
+      <div class="row mt-3">
+        <div class="col text-start fs-6">
+          <label for="codigoMoneda" class="form-label fw-semibold">Moneda *:</label>
+          <!-- <input type="text" class="form-control form-control-sm" id="codigoMoneda" formControlName="codigoMoneda"> -->
+          <p-dropdown
+            formControlName="codigoMoneda" 
+            [options]="codigoMoneda"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar"
+            autoWidth="false"
+            [style]="{'width':'100%'}" 
+            scrollHeight="150px" />
+        </div>
+        <div class="col text-start fs-6">
+          <label for="metodoPago" class="form-label fw-semibold">Método de Pago *:</label>
+          <!-- <input type="text" class="form-control form-control-sm" id="metodoPago" formControlName="metodoPago"> -->
+          <p-dropdown 
+            formControlName="metodoPago"
+            [options]="metodoPago"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Seleccionar"
+            autoWidth="false"
+            [style]="{'width':'100%'}" 
+            scrollHeight="150px"
+          />
+
+
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="row mt-3">
+        <div class="col text-start fs-6">
+          <label for="cantidadTotal" class="form-label fw-semibold">Cantidad total:</label>
+          <input type="text" class="form-control form-control-sm" id="cantidadTotal" formControlName="cantidadTotal" readonly />
+        </div>
+        <div class="col text-start fs-6">
+          <label for="valorTotal" class="form-label fw-semibold">Valor total:</label>
+          <input type="number" class="form-control form-control-sm" id="valorTotal" formControlName="valorTotal" readonly />
+        </div>
+      </div>
+    </div>
+
+      <div class="mt-3">
+        <div class="row">
+          <div class="col">
+            <h5>Detalles de la orden</h5>
+          </div>
+          <div class="col">
+            <p-button type="button" styleClass="button-border" severity="success" label="Agregar item" (click)="addDetalle()"></p-button>
+          </div>
+        </div>
+        <div formArrayName="ordenCompraDetalle">
+          <div *ngFor="let detalle of detalles.controls; let i=index" [formGroupName]="i">
+            <div class="col mt-3">
+              <div class="row">
+                <div class="col text-start fs-6">
+                  <label for="item" class="form-label fw-semibold">Item:</label>
+                  <input type="text" class="form-control form-control-sm" id="item" formControlName="item" />
+                </div>
+                <div class="col text-start fs-6">
+                  <label for="descripcion" class="form-label fw-semibold">Descripción:</label>
+                  <input type="text" class="form-control form-control-sm" id="descripcion" formControlName="descripcion" />
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col text-start fs-6">
+                  <label for="fechaEntrega" class="form-label fw-semibold">Fecha de entrega:</label>
+                  <input type="date" class="form-control form-control-sm" id="fechaEntrega" formControlName="fechaEntrega" />
+                </div>
+                <div class="col text-start fs-6">
+                  <label for="direccion" class="form-label fw-semibold">Dirección:</label>
+                  <input type="text" class="form-control form-control-sm" id="direccion" formControlName="direccion" />
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col text-start fs-6">
+                  <label for="cantidad" class="form-label fw-semibold">Cantidad:</label>
+                  <input type="number" class="form-control form-control-sm" id="cantidad" formControlName="cantidad"/>
+                </div>
+                <div class="col text-start fs-6">
+                  <label for="unidadMedidad" class="form-label fw-semibold">Unidad de medida:</label>
+                  <input type="text" class="form-control form-control-sm" id="unidadMedidad" formControlName="unidadMedidad" />
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col text-start fs-6">
+                  <label for="precio" class="form-label fw-semibold">Precio:</label>
+                  <input type="number" class="form-control form-control-sm" id="precio" formControlName="precio" />
+                </div>
+                <div class="col text-start fs-6">
+                  <label for="subtotal" class="form-label fw-semibold">Subtotal:</label>
+                  <input type="number" class="form-control form-control-sm" id="subtotal" formControlName="subtotal" readonly/>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <p-button styleClass="button-border" type="button" label="Eliminar" severity="danger" (click)="removeDetalle(i)"></p-button>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt-4">
+        <div class="col text-end">
+          <p-button styleClass="button-border" label="Guardar" type="submit"></p-button>
+        </div>
+      </div>
+
+<!-- {{ordenCompraForm.value | json}} -->
+    </form>
+
+</p-dialog>
